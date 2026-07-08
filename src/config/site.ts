@@ -113,16 +113,14 @@ export const site = {
   },
 } as const;
 
-/** Arma un link de WhatsApp con mensaje pre-cargado (URL-encoded). */
-export function waLink(text: string = site.claims[0]): string {
-  const message =
-    text ||
-    "Hola Grúas Sepu, necesito una grúa. Estoy en [ubicación]. Mi vehículo es [tipo].";
-  return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
-}
-
 export const defaultWaText =
   "Hola Grúas Sepu, necesito una grúa. Estoy en [ubicación]. Mi vehículo es [tipo].";
+
+/** Arma un link de WhatsApp con mensaje pre-cargado (URL-encoded). */
+export function waLink(text: string = defaultWaText): string {
+  const message = text || defaultWaText;
+  return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
+}
 
 /** Une BASE_URL (con o sin barra final) con una ruta relativa, sin duplicar/perder barras. */
 export function withBase(path: string): string {
