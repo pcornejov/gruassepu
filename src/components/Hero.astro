@@ -1,0 +1,81 @@
+---
+import { site, waLink } from "../config/site";
+import Icon from "./Icon.astro";
+import hero from "../assets/hero.svg";
+---
+
+<section
+  id="top"
+  class="relative min-h-[92vh] lg:min-h-screen flex items-end lg:items-center overflow-hidden"
+>
+  <img
+    src={hero.src}
+    alt="Grúa cama de Grúas Sepu trabajando en la Región de Ñuble"
+    class="absolute inset-0 w-full h-full object-cover"
+    fetchpriority="high"
+    decoding="async"
+  />
+  <div
+    class="absolute inset-0"
+    style="background: linear-gradient(180deg, rgba(10,42,94,.55) 0%, rgba(10,42,94,.35) 40%, rgba(17,17,17,.88) 100%);"
+  ></div>
+
+  <div class="relative z-10 max-w-[1200px] mx-auto px-5 lg:px-6 pb-12 pt-32 lg:pt-0 lg:pb-24 w-full">
+    <div class="max-w-2xl">
+      <p class="font-semibold text-sm uppercase tracking-[0.08em] text-[color:var(--color-yellow)] mb-4">
+        Servicio de grúa 24/7 · {site.region}
+      </p>
+
+      <h1 class="font-display font-extrabold uppercase text-white text-[2.5rem] leading-[1.05] lg:text-[4.5rem] lg:leading-[1.02] tracking-tight mb-5">
+        ¿Varado en la ruta? <span class="text-[color:var(--color-yellow)]">Llegamos</span> donde nos necesites
+      </h1>
+
+      <p class="text-[17px] lg:text-xl leading-relaxed text-[color:var(--color-chrome)] mb-8 max-w-xl">
+        Grúa cama 24/7 en Chillán y toda la {site.region}. Rápido, seguro y confiable —
+        te respondemos ahora por WhatsApp.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 mb-8">
+        <a
+          href={waLink()}
+          target="_blank"
+          rel="noopener"
+          class="wa-float-pulse inline-flex items-center justify-center gap-2 h-14 px-7 rounded-full bg-[color:var(--color-wa)] text-[color:var(--color-ink)] font-bold text-[17px] shadow-[var(--shadow-cta)] hover:bg-[color:var(--color-wa-dark)] hover:-translate-y-0.5 transition-all"
+          aria-label="Escríbenos por WhatsApp"
+        >
+          <Icon name="whatsapp" class="w-5 h-5" />
+          Escríbenos por WhatsApp
+        </a>
+        <a
+          href={site.phoneHref}
+          class="inline-flex items-center justify-center gap-2 h-14 px-7 rounded-full border-2 border-white text-white font-bold text-[17px] bg-white/10 hover:bg-white/20 hover:-translate-y-0.5 transition-all"
+          aria-label={`Llamar a ${site.name} ${site.phone}`}
+        >
+          <Icon name="phone-call" class="w-5 h-5" />
+          Llamar {site.phone}
+        </a>
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        <span class="inline-flex items-center gap-2 rounded-full bg-black/50 border border-[color:var(--color-chrome)]/30 text-white text-[13px] font-semibold px-3 py-1.5">
+          <span class="w-2 h-2 rounded-full bg-[color:var(--color-red)] pulse-dot"></span>
+          24/7
+        </span>
+        <span class="inline-flex items-center gap-2 rounded-full bg-black/50 border border-[color:var(--color-chrome)]/30 text-white text-[13px] font-semibold px-3 py-1.5">
+          <Icon name="zap" class="w-3.5 h-3.5 text-[color:var(--color-yellow)]" />
+          Respuesta rápida
+        </span>
+        <span class="inline-flex items-center gap-2 rounded-full bg-black/50 border border-[color:var(--color-chrome)]/30 text-white text-[13px] font-semibold px-3 py-1.5">
+          <Icon name="map-pin" class="w-3.5 h-3.5 text-[color:var(--color-yellow)]" />
+          Toda la {site.region}
+        </span>
+        <span class="inline-flex items-center gap-2 rounded-full bg-black/50 border border-[color:var(--color-chrome)]/30 text-white text-[13px] font-semibold px-3 py-1.5">
+          <Icon name="shield-check" class="w-3.5 h-3.5 text-[color:var(--color-yellow)]" />
+          Seguro de carga
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hazard-stripe absolute bottom-0 left-0 right-0"></div>
+</section>

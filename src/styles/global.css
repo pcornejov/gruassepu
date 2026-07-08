@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+@theme {
+  /* Marca — Grúas Sepu */
+  --color-navy: #0a2a5e;
+  --color-navy-dark: #08224e;
+  --color-blue: #12377e;
+  --color-red: #d81e2c;
+  --color-yellow: #f5b301;
+  --color-ink: #0c1830;
+  --color-chrome: #c0c7d0;
+  --color-slate-50: #f4f6fa;
+  --color-wa: #25d366;
+  --color-wa-dark: #1ebe5a;
+
+  --font-display: "Archivo", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-cta: 0 8px 24px rgba(37, 211, 102, 0.35);
+  --shadow-brand-sm: 0 1px 2px rgba(10, 42, 94, 0.08);
+  --shadow-brand-md: 0 6px 16px rgba(10, 42, 94, 0.12);
+  --shadow-brand-lg: 0 12px 32px rgba(10, 42, 94, 0.2);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background-color: #ffffff;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+}
+
+[id] {
+  scroll-margin-top: 72px;
+}
+
+/* Franja hazard amarillo/negro — usar con moderación como divisor de secciones de impacto */
+.hazard-stripe {
+  height: 8px;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--color-yellow) 0 20px,
+    #111111 20px 40px
+  );
+}
+
+/* Botón flotante de WhatsApp — pulso */
+@keyframes wa-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+.wa-float-pulse {
+  animation: wa-pulse 2.2s ease-out infinite;
+}
+
+/* Punto 24/7 */
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.pulse-dot {
+  animation: soft-pulse 1.5s ease-in-out infinite;
+}
+
+/* Reveal on scroll — solo se oculta si JS está activo (progressive enhancement).
+   Sin la clase .js en <html>, el contenido es visible desde el inicio. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Foco visible accesible */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-yellow);
+  outline-offset: 2px;
+}

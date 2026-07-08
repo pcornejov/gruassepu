@@ -1,0 +1,76 @@
+---
+import { waLink } from "../config/site";
+import Icon from "./Icon.astro";
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "../assets/gallery/*.{jpg,jpeg,png,webp,svg}",
+  { eager: true }
+);
+
+const gallery = Object.entries(images)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod]) => ({
+    src: mod.default.src,
+    alt: path
+      .split("/")
+      .pop()!
+      .replace(/\.[^.]+$/, "")
+      .replace(/^\d+-/, "")
+      .replace(/-/g, " "),
+  }));
+---
+
+<section id="galeria" class="bg-[#111111] py-16 lg:py-24">
+  <div class="max-w-[1200px] mx-auto px-5 lg:px-6">
+    <div class="max-w-2xl mb-10 lg:mb-14" data-reveal>
+      <p class="font-semibold text-sm uppercase tracking-[0.08em] text-[color:var(--color-chrome)] mb-3">
+        En terreno
+      </p>
+      <h2 class="font-display font-extrabold uppercase text-white text-[1.875rem] leading-[1.1] lg:text-5xl lg:leading-[1.05] tracking-tight mb-3">
+        Así trabajamos
+      </h2>
+      <p class="text-[color:var(--color-chrome)] text-[17px]">
+        Fotos reales de nuestras grúas en acción por la Región de Ñuble.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-3">
+      {
+        gallery.map(({ src, alt }, i) => (
+          <div
+            data-reveal
+            style={`transition-delay:${i * 50}ms`}
+            class={`relative overflow-hidden rounded-xl border border-[color:var(--color-chrome)]/15 group ${i < 2 ? "col-span-2 row-span-2 aspect-square" : "aspect-square"}`}
+          >
+            <img
+              src={src}
+              alt={`Grúa Sepu — ${alt}`}
+              loading={i < 2 ? "eager" : "lazy"}
+              decoding="async"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+            />
+            <div
+              class="absolute inset-0 pointer-events-none"
+              style="background: linear-gradient(0deg, rgba(17,17,17,.35), transparent 55%);"
+            />
+            <span class="absolute bottom-2 left-2 right-2 text-white text-xs font-semibold capitalize opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+              {alt}
+            </span>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 flex justify-center" data-reveal>
+      <a
+        href={waLink("Hola Grúas Sepu, necesito una grúa como las de sus fotos, ¿me pueden ayudar ahora?")}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center gap-2 h-12 px-6 rounded-full bg-[color:var(--color-wa)] text-[color:var(--color-ink)] font-bold text-sm shadow-[var(--shadow-cta)] hover:bg-[color:var(--color-wa-dark)] transition-colors"
+      >
+        <Icon name="whatsapp" class="w-4 h-4" />
+        ¿Necesitas una grúa ahora? Escríbenos
+      </a>
+    </div>
+  </div>
+</section>

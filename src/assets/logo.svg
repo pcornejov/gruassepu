@@ -1,0 +1,15 @@
+<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="navyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#12377E"/>
+      <stop offset="100%" stop-color="#0A2A5E"/>
+    </linearGradient>
+  </defs>
+  <circle cx="120" cy="120" r="112" fill="url(#navyGrad)" stroke="#C0C7D0" stroke-width="4"/>
+  <circle cx="120" cy="120" r="112" fill="none" stroke="#F5B301" stroke-width="3" stroke-dasharray="6 6"/>
+  <path d="M60 148h13v-30l16-18h30l14 18h13v30" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="82" cy="150" r="9" fill="#FFFFFF"/>
+  <circle cx="128" cy="150" r="9" fill="#FFFFFF"/>
+  <text x="120" y="188" font-family="Arial, sans-serif" font-size="26" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">SEPU</text>
+  <text x="120" y="66" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#F5B301" text-anchor="middle" letter-spacing="2">GRUAS 24/7</text>
+</svg>

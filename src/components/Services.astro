@@ -1,0 +1,63 @@
+---
+import { site, waLink } from "../config/site";
+import Icon from "./Icon.astro";
+---
+
+<section id="servicios" class="bg-white py-16 lg:py-24">
+  <div class="max-w-[1200px] mx-auto px-5 lg:px-6">
+    <div class="max-w-2xl mb-10 lg:mb-14" data-reveal>
+      <p class="font-semibold text-sm uppercase tracking-[0.08em] text-[color:var(--color-red)] mb-3">
+        Nuestros servicios
+      </p>
+      <h2 class="font-display font-extrabold uppercase text-[color:var(--color-ink)] text-[1.875rem] leading-[1.1] lg:text-5xl lg:leading-[1.05] tracking-tight">
+        Todo lo que necesitas sobre ruedas
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+      {
+        site.services.map((service, i) => (
+          <div
+            data-reveal
+            style={`transition-delay:${i * 60}ms`}
+            class="group bg-white border border-slate-200 rounded-xl p-6 shadow-[var(--shadow-brand-sm)] hover:shadow-[var(--shadow-brand-md)] hover:-translate-y-1 border-t-[3px] border-t-transparent hover:border-t-[color:var(--color-yellow)] transition-all"
+          >
+            <div class="w-12 h-12 rounded-xl bg-[color:var(--color-navy)] flex items-center justify-center mb-4">
+              <Icon name={service.icon as any} class="w-6 h-6 text-white" />
+            </div>
+            <h3 class="font-display font-bold text-[color:var(--color-ink)] text-xl mb-2">
+              {service.title}
+            </h3>
+            <p class="text-[15px] leading-relaxed text-slate-600 mb-4">
+              {service.description}
+            </p>
+            <a
+              href={waLink(service.waText)}
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center gap-1.5 text-[color:var(--color-wa-dark)] font-bold text-sm hover:underline"
+            >
+              Cotizar por WhatsApp
+              <Icon name="arrow-right" class="w-4 h-4" />
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="mt-14 bg-[color:var(--color-navy)] py-8">
+    <div class="max-w-[1200px] mx-auto px-5 lg:px-6 flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
+      <p class="text-white font-semibold text-lg">¿No ves tu caso? Escríbenos igual</p>
+      <a
+        href={waLink()}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center gap-2 h-12 px-6 rounded-full bg-[color:var(--color-wa)] text-[color:var(--color-ink)] font-bold text-sm shadow-[var(--shadow-cta)] hover:bg-[color:var(--color-wa-dark)] transition-colors"
+      >
+        <Icon name="whatsapp" class="w-4 h-4" />
+        Escribir por WhatsApp
+      </a>
+    </div>
+  </div>
+</section>

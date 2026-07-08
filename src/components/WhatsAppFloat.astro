@@ -1,0 +1,14 @@
+---
+import { waLink } from "../config/site";
+import Icon from "./Icon.astro";
+---
+
+<a
+  href={waLink()}
+  target="_blank"
+  rel="noopener"
+  class="wa-float-pulse fixed right-4 bottom-4 lg:right-6 lg:bottom-6 z-50 inline-flex items-center justify-center w-[60px] h-[60px] lg:w-16 lg:h-16 rounded-full bg-[color:var(--color-wa)] text-white shadow-[var(--shadow-cta)] hover:bg-[color:var(--color-wa-dark)] transition-colors"
+  aria-label="Escríbenos por WhatsApp"
+>
+  <Icon name="whatsapp" class="w-8 h-8" />
+</a>

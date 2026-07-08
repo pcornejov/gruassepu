@@ -1,0 +1,67 @@
+---
+import { site, waLink } from "../config/site";
+import Icon from "./Icon.astro";
+
+const accentBorder: Record<string, string> = {
+  red: "border-l-[color:var(--color-red)]",
+  yellow: "border-l-[color:var(--color-yellow)]",
+  navy: "border-l-[color:var(--color-navy)]",
+};
+
+const accentBg: Record<string, string> = {
+  red: "bg-[color:var(--color-red)]/12 text-[color:var(--color-red)]",
+  yellow: "bg-[color:var(--color-yellow)]/20 text-[#8a6200]",
+  navy: "bg-[color:var(--color-navy)]/10 text-[color:var(--color-navy)]",
+};
+---
+
+<section id="por-que" class="bg-[color:var(--color-slate-50)] py-16 lg:py-24">
+  <div class="max-w-[1200px] mx-auto px-5 lg:px-6">
+    <div class="max-w-2xl mb-10 lg:mb-14" data-reveal>
+      <p class="font-semibold text-sm uppercase tracking-[0.08em] text-[#8a6200] mb-3">
+        Por qué elegirnos
+      </p>
+      <h2 class="font-display font-extrabold uppercase text-[color:var(--color-ink)] text-[1.875rem] leading-[1.1] lg:text-5xl lg:leading-[1.05] tracking-tight">
+        Tu tranquilidad, nuestro compromiso
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {
+        site.whyUs.map((item, i) => (
+          <div
+            data-reveal
+            style={`transition-delay:${i * 60}ms`}
+            class={`flex items-start gap-4 bg-white rounded-xl p-5 shadow-[var(--shadow-brand-sm)] border-l-4 ${accentBorder[item.accent]}`}
+          >
+            <div class={`shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${accentBg[item.accent]}`}>
+              <Icon name={item.icon as any} class="w-5 h-5" />
+            </div>
+            <div>
+              <h3 class="font-bold text-[color:var(--color-ink)] text-lg mb-1">{item.title}</h3>
+              <p class="text-[15px] leading-relaxed text-slate-600">{item.description}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="mt-14 bg-[color:var(--color-navy)] py-8">
+    <div class="max-w-[1200px] mx-auto px-5 lg:px-6 flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
+      <span class="inline-flex items-center gap-2 text-white font-display font-extrabold text-2xl uppercase tracking-tight">
+        <Icon name="clock" class="w-6 h-6 text-[color:var(--color-yellow)]" />
+        24/7 · Disponibles todos los días
+      </span>
+      <a
+        href={waLink()}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center gap-2 h-12 px-6 rounded-full bg-[color:var(--color-wa)] text-[color:var(--color-ink)] font-bold text-sm shadow-[var(--shadow-cta)] hover:bg-[color:var(--color-wa-dark)] transition-colors"
+      >
+        <Icon name="whatsapp" class="w-4 h-4" />
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,60 @@
+---
+import { site, waLink } from "../config/site";
+import Icon from "./Icon.astro";
+import logo from "../assets/logo.svg";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-[color:var(--color-navy-dark)] text-[color:var(--color-chrome)]">
+  <div class="max-w-[1200px] mx-auto px-5 lg:px-6 py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8">
+      <div>
+        <div class="flex items-center gap-2 mb-3">
+          <img src={logo.src} alt={`${site.name} — logo`} class="h-9 w-9 rounded-full" width="36" height="36" />
+          <span class="font-display font-extrabold text-white uppercase tracking-tight">
+            {site.name}
+          </span>
+        </div>
+        <p class="text-sm">{site.claims[0]}</p>
+      </div>
+
+      <div>
+        <h3 class="text-white font-bold text-sm uppercase tracking-wide mb-3">Contacto</h3>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a href={site.phoneHref} class="hover:text-white transition-colors">{site.phone}</a>
+          </li>
+          <li>
+            <a href={waLink()} target="_blank" rel="noopener" class="hover:text-white transition-colors">
+              WhatsApp
+            </a>
+          </li>
+          <li>{site.region}, Chile</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-white font-bold text-sm uppercase tracking-wide mb-3">Síguenos</h3>
+        <a
+          href={site.social.instagram}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 hover:text-white transition-colors text-sm"
+        >
+          <Icon name="instagram" class="w-4 h-4" />
+          {site.social.instagramHandle}
+        </a>
+      </div>
+    </div>
+
+    <div class="border-t border-[color:var(--color-chrome)]/15 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+      <p>© {year} {site.name}. Todos los derechos reservados.</p>
+      <nav class="flex gap-4">
+        <a href="#servicios" class="hover:text-white transition-colors">Servicios</a>
+        <a href="#galeria" class="hover:text-white transition-colors">Galería</a>
+        <a href="#contacto" class="hover:text-white transition-colors">Contacto</a>
+      </nav>
+    </div>
+  </div>
+</footer>

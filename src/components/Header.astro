@@ -1,0 +1,116 @@
+---
+import { site, waLink } from "../config/site";
+import Icon from "./Icon.astro";
+import logo from "../assets/logo.svg";
+---
+
+<header class="sticky top-0 z-40 bg-[color:var(--color-navy)] border-b border-[color:var(--color-chrome)]/20">
+  <div class="max-w-[1200px] mx-auto px-5 lg:px-6 h-[60px] flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2 shrink-0">
+      <img src={logo.src} alt={`${site.name} — logo`} class="h-10 w-10 rounded-full" width="40" height="40" />
+      <span class="font-display font-extrabold text-white text-lg tracking-tight uppercase">
+        {site.name}
+      </span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-7" aria-label="Navegación principal">
+      <a href="#servicios" class="text-white/90 font-semibold text-sm hover:text-[color:var(--color-yellow)] transition-colors">Servicios</a>
+      <a href="#por-que" class="text-white/90 font-semibold text-sm hover:text-[color:var(--color-yellow)] transition-colors">Por qué</a>
+      <a href="#galeria" class="text-white/90 font-semibold text-sm hover:text-[color:var(--color-yellow)] transition-colors">Galería</a>
+      <a href="#cobertura" class="text-white/90 font-semibold text-sm hover:text-[color:var(--color-yellow)] transition-colors">Cobertura</a>
+      <a href="#contacto" class="text-white/90 font-semibold text-sm hover:text-[color:var(--color-yellow)] transition-colors">Contacto</a>
+    </nav>
+
+    <div class="hidden lg:flex items-center gap-3">
+      <a
+        href={site.phoneHref}
+        class="inline-flex items-center gap-2 h-11 px-4 rounded-full border-2 border-white text-white font-bold text-sm hover:bg-white hover:text-[color:var(--color-navy)] transition-colors"
+        aria-label={`Llamar a ${site.name} ${site.phone}`}
+      >
+        <Icon name="phone-call" class="w-4 h-4" />
+        Llamar
+      </a>
+      <a
+        href={waLink()}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center gap-2 h-11 px-4 rounded-full bg-[color:var(--color-wa)] text-[color:var(--color-ink)] font-bold text-sm hover:bg-[color:var(--color-wa-dark)] transition-colors shadow-[var(--shadow-cta)]"
+        aria-label="Escríbenos por WhatsApp"
+      >
+        <Icon name="whatsapp" class="w-4 h-4" />
+        WhatsApp
+      </a>
+    </div>
+
+    <div class="flex lg:hidden items-center gap-2">
+      <a
+        href={site.phoneHref}
+        class="inline-flex items-center justify-center w-11 h-11 rounded-full border-2 border-white text-white"
+        aria-label={`Llamar a ${site.name} ${site.phone}`}
+      >
+        <Icon name="phone" class="w-5 h-5" />
+      </a>
+      <a
+        href={waLink()}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center justify-center w-11 h-11 rounded-full bg-[color:var(--color-wa)] text-[color:var(--color-ink)]"
+        aria-label="Escríbenos por WhatsApp"
+      >
+        <Icon name="whatsapp" class="w-5 h-5" />
+      </a>
+      <button
+        id="menu-toggle"
+        type="button"
+        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-white"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <Icon name="menu" class="w-6 h-6" id="menu-icon-open" />
+      </button>
+    </div>
+  </div>
+
+  <nav
+    id="mobile-menu"
+    class="lg:hidden hidden flex-col bg-[color:var(--color-navy)] border-t border-[color:var(--color-chrome)]/20"
+    aria-label="Navegación móvil"
+  >
+    <a href="#servicios" class="px-5 py-4 text-white font-display font-bold uppercase tracking-wide border-b border-white/10">Servicios</a>
+    <a href="#por-que" class="px-5 py-4 text-white font-display font-bold uppercase tracking-wide border-b border-white/10">Por qué elegirnos</a>
+    <a href="#galeria" class="px-5 py-4 text-white font-display font-bold uppercase tracking-wide border-b border-white/10">Galería</a>
+    <a href="#cobertura" class="px-5 py-4 text-white font-display font-bold uppercase tracking-wide border-b border-white/10">Cobertura</a>
+    <a href="#contacto" class="px-5 py-4 text-white font-display font-bold uppercase tracking-wide">Contacto</a>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+
+  if (toggle && menu) {
+    const closeMenu = () => {
+      menu.classList.add("hidden");
+      menu.classList.remove("flex");
+      toggle.setAttribute("aria-expanded", "false");
+    };
+
+    toggle.addEventListener("click", () => {
+      const isOpen = menu.classList.contains("flex");
+      if (isOpen) {
+        closeMenu();
+      } else {
+        menu.classList.remove("hidden");
+        menu.classList.add("flex");
+        toggle.setAttribute("aria-expanded", "true");
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMenu();
+    });
+
+    menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
+  }
+</script>
