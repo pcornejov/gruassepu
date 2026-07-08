@@ -1,6 +1,10 @@
 ---
 import { site, waLink } from "../config/site";
 import Icon from "./Icon.astro";
+
+const mapsQuery = encodeURIComponent(`${site.hq}, ${site.region}, Chile`);
+const mapsEmbedSrc = `https://www.google.com/maps?q=${mapsQuery}&z=12&output=embed`;
+const mapsLink = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
 ---
 
 <section id="cobertura" class="bg-[color:var(--color-navy)] py-16 lg:py-24">
@@ -53,19 +57,37 @@ import Icon from "./Icon.astro";
         </div>
       </div>
 
-      <div class="relative rounded-2xl overflow-hidden aspect-[4/3] lg:aspect-square" data-reveal>
+      <div class="relative rounded-2xl overflow-hidden aspect-[4/3] lg:aspect-square border border-[color:var(--color-chrome)]/15" data-reveal>
+        <iframe
+          src={mapsEmbedSrc}
+          title={`Ubicación de ${site.name} en ${site.hq}, ${site.region}`}
+          class="absolute inset-0 w-full h-full grayscale-[15%] contrast-[1.05]"
+          style="border:0;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+
         <div
-          class="absolute inset-0"
-          style="background: repeating-linear-gradient(135deg, rgba(192,199,208,.06) 0 2px, transparent 2px 22px), linear-gradient(160deg, #12377E 0%, #0A2A5E 100%);"
-        ></div>
-        <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-8">
-          <Icon name="truck" class="w-14 h-14 text-[color:var(--color-yellow)] mb-4" />
-          <p class="font-display font-extrabold uppercase text-white text-2xl tracking-tight mb-2">
-            Base en {site.hq}
-          </p>
-          <p class="text-[color:var(--color-chrome)]">
-            {site.travelNote}
-          </p>
+          class="absolute inset-x-0 bottom-0 pointer-events-none"
+          style="background: linear-gradient(0deg, rgba(10,42,94,.95) 10%, rgba(10,42,94,.7) 55%, transparent 100%);"
+        >
+          <div class="p-6 pt-16 pointer-events-auto">
+            <p class="font-display font-extrabold uppercase text-white text-xl tracking-tight mb-1">
+              Base en {site.hq}
+            </p>
+            <p class="text-[color:var(--color-chrome)] text-sm mb-3">
+              {site.travelNote}
+            </p>
+            <a
+              href={mapsLink}
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center gap-1.5 text-[color:var(--color-yellow)] font-bold text-sm hover:underline"
+            >
+              <Icon name="map-pin" class="w-4 h-4" />
+              Ver en Google Maps
+            </a>
+          </div>
         </div>
       </div>
     </div>
