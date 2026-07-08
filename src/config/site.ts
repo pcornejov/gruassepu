@@ -10,6 +10,10 @@ export const site = {
   whatsapp: "56993128876",
 
   region: "Región de Ñuble",
+  hq: "San Carlos",
+  travelNote:
+    "Con base en San Carlos. También viajamos al sur del país y a Santiago según disponibilidad — consúltanos tu ruta.",
+  travelChip: "Viajes a Santiago y el sur",
   comunas: [
     "Chillán",
     "Chillán Viejo",

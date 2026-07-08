@@ -18,7 +18,7 @@ const jsonLd = {
   name: site.name,
   image: ogImage.toString(),
   telephone: site.phone,
-  areaServed: site.region,
+  areaServed: [site.region, "Chile"],
   openingHours: "Mo-Su 00:00-23:59",
   url: canonicalURL.toString(),
   sameAs: [site.social.instagram],
