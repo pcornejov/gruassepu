@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { site, waLink } from "../config/site";
 import Icon from "./Icon.astro";
 import hero from "../assets/hero.jpg";
@@ -8,10 +9,14 @@ import hero from "../assets/hero.jpg";
   id="top"
   class="relative min-h-[92vh] lg:min-h-screen flex items-end lg:items-center overflow-hidden"
 >
-  <img
-    src={hero.src}
+  <Image
+    src={hero}
     alt="Grúa cama de Grúas Sepu trabajando en la Región de Ñuble"
     class="absolute inset-0 w-full h-full object-cover"
+    widths={[640, 960, 1280, 1920]}
+    sizes="100vw"
+    format="avif"
+    quality={75}
     fetchpriority="high"
     decoding="async"
   />

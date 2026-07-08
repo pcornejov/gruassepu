@@ -1,0 +1,15 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#12377E"/>
+      <stop offset="100%" stop-color="#0A2A5E"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect y="0" width="1200" height="10" fill="#F5B301"/>
+  <rect y="620" width="1200" height="10" fill="#F5B301"/>
+  <text x="500" y="270" font-family="Arial, sans-serif" font-size="60" font-weight="800" fill="#FFFFFF" letter-spacing="1">GRÚAS SEPU</text>
+  <text x="500" y="320" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#F5B301" letter-spacing="1">GRÚA 24/7 · REGIÓN DE ÑUBLE</text>
+  <text x="500" y="365" font-family="Arial, sans-serif" font-size="21" fill="#C0C7D0">Rescate y traslado de vehículos y maquinaria</text>
+  <text x="500" y="420" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#FFFFFF">WhatsApp +56 9 9312 8876</text>
+</svg>
