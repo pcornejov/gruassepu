@@ -14,7 +14,7 @@ const ogImage = new URL(withBase("og-image.jpg"), Astro.site);
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": ["LocalBusiness", "AutomotiveBusiness"],
   name: site.name,
   image: ogImage.toString(),
   telephone: site.phone,
@@ -24,6 +24,7 @@ const jsonLd = {
   sameAs: [site.social.instagram],
   address: {
     "@type": "PostalAddress",
+    addressLocality: site.hq,
     addressRegion: site.region,
     addressCountry: "CL",
   },
@@ -70,6 +71,16 @@ const jsonLd = {
     <script is:inline>
       document.documentElement.classList.add("js");
     </script>
+
+    {
+      site.cloudflareAnalyticsToken && (
+        <script
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={`{"token": "${site.cloudflareAnalyticsToken}"}`}
+        />
+      )
+    }
   </head>
   <body class="bg-white text-[color:var(--color-ink)]">
     <slot />

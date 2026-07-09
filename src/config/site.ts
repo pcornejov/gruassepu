@@ -115,6 +115,10 @@ export const site = {
     instagram: "https://instagram.com/gruas_sepu",
     instagramHandle: "@gruas_sepu",
   },
+
+  // Token de "Cloudflare Web Analytics" (Cloudflare dashboard → Analytics →
+  // Web Analytics → Site tag). Dejar vacío desactiva el script por completo.
+  cloudflareAnalyticsToken: "",
 } as const;
 
 export const defaultWaText =
