@@ -1,9 +1,9 @@
 export const site = {
   name: "Grúas Sepu",
   shortName: "Sepu",
-  tagline: "Grúa 24/7 en la Región de Ñuble — rescate y traslado de todo tipo de vehículos",
+  tagline: "Grúa 24/7 en San Carlos, Chillán y toda la Región de Ñuble",
   description:
-    "Grúa cama 24/7 en San Carlos y toda la Región de Ñuble. Rescate, traslado de vehículos siniestrados, plumas e izaje, y traslado de maquinaria. Escríbenos por WhatsApp y salimos de inmediato.",
+    "Grúa cama 24/7 en San Carlos, Chillán y toda la Región de Ñuble. Rescate, traslado de vehículos siniestrados, plumas e izaje, y traslado de maquinaria. Escríbenos por WhatsApp y salimos de inmediato.",
 
   phone: "+56 9 9312 8876",
   phoneHref: "tel:+56993128876",
