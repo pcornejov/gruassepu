@@ -118,7 +118,7 @@ export const site = {
 
   // Token de "Cloudflare Web Analytics" (Cloudflare dashboard → Analytics →
   // Web Analytics → Site tag). Dejar vacío desactiva el script por completo.
-  cloudflareAnalyticsToken: "",
+  cloudflareAnalyticsToken: "b6761ad814d442de812d61bee1e30e7c",
 } as const;
 
 export const defaultWaText =
