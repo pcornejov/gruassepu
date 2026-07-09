@@ -1,0 +1,192 @@
+---
+import { site, waLink } from "../config/site";
+import Icon from "./Icon.astro";
+
+const { minFare, rateLightPerKm, rateHeavyPerKm, heavyThresholdKg } = site.pricing;
+
+const waLinkFuera = waLink(
+  "Hola Grúas Sepu, quiero cotizar un traslado fuera de la Región de Ñuble. ¿Me pueden dar más información?"
+);
+---
+
+<section id="cotizador" class="bg-[color:var(--color-slate-50)] py-16 lg:py-24">
+  <div class="max-w-[700px] mx-auto px-5 lg:px-6">
+    <div class="mb-10 lg:mb-14 text-center" data-reveal>
+      <p class="font-semibold text-sm uppercase tracking-[0.08em] text-[#8a6200] mb-3">
+        Cotiza tu traslado
+      </p>
+      <h2 class="font-display font-extrabold uppercase text-[color:var(--color-ink)] text-[1.875rem] leading-[1.1] lg:text-5xl lg:leading-[1.05] tracking-tight">
+        Calcula un estimado al instante
+      </h2>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-[var(--shadow-brand-lg)] p-6 lg:p-8" data-reveal>
+      <div id="cotizador-zona" class="grid grid-cols-2 gap-2 mb-6" role="group" aria-label="Zona del traslado">
+        <button
+          type="button"
+          data-value="dentro"
+          aria-pressed="true"
+          class="h-11 rounded-full font-bold text-sm border-2 border-[color:var(--color-navy)] text-[color:var(--color-navy)] aria-pressed:bg-[color:var(--color-navy)] aria-pressed:text-white transition-colors"
+        >
+          Dentro de Ñuble
+        </button>
+        <button
+          type="button"
+          data-value="fuera"
+          aria-pressed="false"
+          class="h-11 rounded-full font-bold text-sm border-2 border-[color:var(--color-navy)] text-[color:var(--color-navy)] aria-pressed:bg-[color:var(--color-navy)] aria-pressed:text-white transition-colors"
+        >
+          Fuera de la región
+        </button>
+      </div>
+
+      <div id="cotizador-dentro">
+        <p class="font-bold text-[color:var(--color-ink)] text-sm mb-2">Tipo de vehículo</p>
+        <div id="cotizador-vehiculo" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-5" role="group" aria-label="Tipo de vehículo">
+          <button
+            type="button"
+            data-value="light"
+            aria-pressed="true"
+            class="h-12 rounded-xl font-semibold text-sm px-3 border-2 border-[color:var(--color-chrome)] text-[color:var(--color-ink)] aria-pressed:border-[color:var(--color-yellow)] aria-pressed:bg-[color:var(--color-yellow)]/15 transition-colors"
+          >
+            Auto o camioneta
+            <span class="block text-xs font-normal text-slate-500">hasta {heavyThresholdKg.toLocaleString("es-CL")} kg</span>
+          </button>
+          <button
+            type="button"
+            data-value="heavy"
+            aria-pressed="false"
+            class="h-12 rounded-xl font-semibold text-sm px-3 border-2 border-[color:var(--color-chrome)] text-[color:var(--color-ink)] aria-pressed:border-[color:var(--color-yellow)] aria-pressed:bg-[color:var(--color-yellow)]/15 transition-colors"
+          >
+            Camión o maquinaria
+            <span class="block text-xs font-normal text-slate-500">más de {heavyThresholdKg.toLocaleString("es-CL")} kg</span>
+          </button>
+        </div>
+
+        <label for="cotizador-km" class="font-bold text-[color:var(--color-ink)] text-sm mb-2 block">
+          Distancia estimada (km)
+        </label>
+        <input
+          id="cotizador-km"
+          type="number"
+          inputmode="numeric"
+          min="0"
+          step="1"
+          placeholder="Ej: 15"
+          class="w-full h-12 rounded-xl border-2 border-[color:var(--color-chrome)] px-4 text-[color:var(--color-ink)] font-semibold mb-6 focus:border-[color:var(--color-navy)] focus:outline-none"
+        />
+
+        <div class="bg-[color:var(--color-slate-50)] rounded-xl p-5 mb-5 text-center">
+          <p id="cotizador-price" class="font-display font-extrabold text-[color:var(--color-navy)] text-3xl lg:text-4xl tracking-tight">
+            Ingresa los km
+          </p>
+          <p class="text-xs text-slate-500 mt-2">
+            Valor referencial. Confirmamos el precio final por WhatsApp antes de salir.
+          </p>
+        </div>
+
+        <a
+          id="cotizador-wa-dentro"
+          href={waLink()}
+          target="_blank"
+          rel="noopener"
+          aria-disabled="true"
+          class="pointer-events-none opacity-50 inline-flex w-full items-center justify-center gap-2 h-14 px-4 rounded-full bg-[color:var(--color-wa)] text-[color:var(--color-ink)] font-bold text-[17px] shadow-[var(--shadow-cta)] hover:bg-[color:var(--color-wa-dark)] transition-colors"
+        >
+          <Icon name="whatsapp" class="w-5 h-5" />
+          Cotizar por WhatsApp
+        </a>
+      </div>
+
+      <div id="cotizador-fuera" class="hidden text-center">
+        <p class="text-[15px] leading-relaxed text-slate-600 mb-6">
+          Los viajes fuera de la {site.region} (Santiago, sur del país, etc.) tienen tarifas
+          especiales según la ruta. Escríbenos y te cotizamos al tiro.
+        </p>
+        <a
+          href={waLinkFuera}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex w-full items-center justify-center gap-2 h-14 px-4 rounded-full bg-[color:var(--color-wa)] text-[color:var(--color-ink)] font-bold text-[17px] shadow-[var(--shadow-cta)] hover:bg-[color:var(--color-wa-dark)] transition-colors"
+        >
+          <Icon name="whatsapp" class="w-5 h-5" />
+          Consultar por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ minFare, rateLightPerKm, rateHeavyPerKm, whatsappNumber: site.whatsapp }}>
+  const zonaGroup = document.getElementById("cotizador-zona");
+  const vehiculoGroup = document.getElementById("cotizador-vehiculo");
+  const dentroPanel = document.getElementById("cotizador-dentro");
+  const fueraPanel = document.getElementById("cotizador-fuera");
+  const kmInput = document.getElementById("cotizador-km");
+  const priceEl = document.getElementById("cotizador-price");
+  const waLinkEl = document.getElementById("cotizador-wa-dentro");
+
+  const currency = new Intl.NumberFormat("es-CL", {
+    style: "currency",
+    currency: "CLP",
+    maximumFractionDigits: 0,
+  });
+
+  const vehicleLabels = {
+    light: "Auto o camioneta",
+    heavy: "Camión o maquinaria pesada",
+  };
+
+  function initToggleGroup(container) {
+    if (!container) return { get: () => null, set: () => {} };
+    const buttons = Array.from(container.querySelectorAll("[data-value]"));
+    let current = buttons.find((b) => b.getAttribute("aria-pressed") === "true")?.dataset.value ?? buttons[0]?.dataset.value;
+    const listeners = [];
+    function set(value) {
+      current = value;
+      buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.value === value)));
+      listeners.forEach((fn) => fn(value));
+    }
+    buttons.forEach((b) => b.addEventListener("click", () => set(b.dataset.value)));
+    return {
+      get: () => current,
+      onChange: (fn) => listeners.push(fn),
+    };
+  }
+
+  const zona = initToggleGroup(zonaGroup);
+  const vehiculo = initToggleGroup(vehiculoGroup);
+
+  function updatePrice() {
+    const km = parseFloat(kmInput.value);
+    if (!km || km <= 0) {
+      priceEl.textContent = "Ingresa los km";
+      waLinkEl.setAttribute("aria-disabled", "true");
+      waLinkEl.classList.add("pointer-events-none", "opacity-50");
+      return;
+    }
+
+    const rate = vehiculo.get() === "heavy" ? rateHeavyPerKm : rateLightPerKm;
+    const price = Math.max(minFare, km * rate);
+    priceEl.textContent = currency.format(price);
+
+    waLinkEl.removeAttribute("aria-disabled");
+    waLinkEl.classList.remove("pointer-events-none", "opacity-50");
+
+    const message = `Hola Grúas Sepu, quiero cotizar un traslado. Distancia aprox.: ${km} km. Vehículo: ${vehicleLabels[vehiculo.get()]}. Estimado en el sitio: ${currency.format(price)}. ¿Me confirman el valor?`;
+    waLinkEl.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  }
+
+  kmInput?.addEventListener("input", updatePrice);
+  vehiculo.onChange(updatePrice);
+
+  zona.onChange((value) => {
+    if (value === "fuera") {
+      dentroPanel.classList.add("hidden");
+      fueraPanel.classList.remove("hidden");
+    } else {
+      fueraPanel.classList.add("hidden");
+      dentroPanel.classList.remove("hidden");
+    }
+  });
+</script>

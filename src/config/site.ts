@@ -116,6 +116,15 @@ export const site = {
     instagramHandle: "@gruas_sepu",
   },
 
+  // Tarifas del cotizador. Valores referenciales — el precio final se
+  // confirma siempre por WhatsApp antes de salir.
+  pricing: {
+    minFare: 30000,
+    rateLightPerKm: 1500, // hasta heavyThresholdKg
+    rateHeavyPerKm: 1700, // sobre heavyThresholdKg
+    heavyThresholdKg: 4500,
+  },
+
   // Token de "Cloudflare Web Analytics" (Cloudflare dashboard → Analytics →
   // Web Analytics → Site tag). Dejar vacío desactiva el script por completo.
   cloudflareAnalyticsToken: "b6761ad814d442de812d61bee1e30e7c",

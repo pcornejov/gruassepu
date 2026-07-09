@@ -3,19 +3,6 @@ import { Image } from "astro:assets";
 import { site, waLink, withBase } from "../config/site";
 import Icon from "./Icon.astro";
 import tarjeta from "../assets/tarjeta-contacto.jpg";
-import sharp from "sharp";
-import fs from "node:fs";
-import path from "node:path";
-
-// Versión liviana de la tarjeta para embeber como foto de contacto en el vCard
-// (b64 en el propio .vcf, sin depender de una descarga aparte).
-const tarjetaPath = path.join(process.cwd(), "src/assets/tarjeta-contacto.jpg");
-const vcardPhotoBase64 = (
-  await sharp(fs.readFileSync(tarjetaPath))
-    .resize(480, 480, { fit: "inside", withoutEnlargement: true })
-    .jpeg({ quality: 72 })
-    .toBuffer()
-).toString("base64");
 ---
 
 <section id="contacto" class="bg-[#111111] relative">
@@ -88,7 +75,7 @@ const vcardPhotoBase64 = (
           type="button"
           id="share-card-btn"
           class="bg-white rounded-2xl p-4 shadow-[var(--shadow-brand-lg)] hover:shadow-xl hover:-translate-y-1 transition-all text-center w-full max-w-[280px] sm:w-[260px] flex flex-col justify-center cursor-pointer"
-          aria-label="Compartir contacto de Grúas Sepu"
+          aria-label="Compartir la página web de Grúas Sepu"
         >
           <Image
             src={tarjeta}
@@ -101,9 +88,9 @@ const vcardPhotoBase64 = (
           <p class="font-bold text-[color:var(--color-ink)] text-sm">
             Nuestra tarjeta de contacto
           </p>
-          <p class="flex items-center justify-center gap-1.5 text-slate-500 text-xs mt-1">
+          <p id="share-card-caption" class="flex items-center justify-center gap-1.5 text-slate-500 text-xs mt-1">
             <Icon name="share" class="w-3.5 h-3.5" />
-            Toca para compartir contacto
+            Toca para compartir la página web
           </p>
         </button>
       </div>
@@ -112,68 +99,38 @@ const vcardPhotoBase64 = (
 </section>
 
 <script define:vars={{
-  vcardName: site.name,
-  vcardPhone: `+${site.whatsapp}`,
-  vcardHQ: site.hq,
-  vcardNote: `Grúa 24/7 en la ${site.region} — rescate y traslado de vehículos`,
-  vcardPhotoBase64,
+  shareTitle: site.name,
+  shareText: site.tagline,
 }}>
   const shareBtn = document.getElementById("share-card-btn");
-
-  // Los valores de propiedad de vCard van plegados cada 75 caracteres,
-  // con las líneas de continuación empezando con un espacio (RFC 2426).
-  function foldVcardLine(line) {
-    const chunks = line.match(/.{1,75}/g) ?? [line];
-    return chunks.join("\r\n ");
-  }
+  const caption = document.getElementById("share-card-caption");
 
   shareBtn?.addEventListener("click", async () => {
-    const vcard = [
-      "BEGIN:VCARD",
-      "VERSION:3.0",
-      `FN:${vcardName}`,
-      `ORG:${vcardName}`,
-      `TEL;TYPE=CELL:${vcardPhone}`,
-      `ADR:;;${vcardHQ};;;;Chile`,
-      `NOTE:${vcardNote}`,
-      `URL:${location.origin}`,
-      foldVcardLine(`PHOTO;ENCODING=b;TYPE=JPEG:${vcardPhotoBase64}`),
-      "END:VCARD",
-    ].join("\r\n");
-
     const shareData = {
-      title: vcardName,
-      text: `Contacto de ${vcardName}`,
+      title: shareTitle,
+      text: shareText,
+      url: location.origin,
     };
 
     try {
-      const file = new File([vcard], "gruas-sepu.vcf", { type: "text/vcard" });
-
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ ...shareData, files: [file] });
-        return;
-      }
-
       if (navigator.share) {
         await navigator.share(shareData);
         return;
       }
 
-      // Fallback sin Web Share API (desktop): descarga directa del .vcf
-      // (la mayoría de los navegadores móviles ofrecen "Agregar contacto" al abrirlo igual).
-      const blob = new Blob([vcard], { type: "text/vcard" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "gruas-sepu.vcf";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(url);
+      // Fallback sin Web Share API (desktop): copiar el link al portapapeles.
+      await navigator.clipboard.writeText(location.origin);
+      if (caption) {
+        const original = caption.innerHTML;
+        caption.textContent = "Enlace copiado ✓";
+        setTimeout(() => {
+          caption.innerHTML = original;
+        }, 2000);
+      }
     } catch (err) {
       // El usuario canceló la hoja de compartir: no es un error real.
       if (err instanceof Error && err.name !== "AbortError") {
-        console.error("No se pudo compartir el contacto:", err);
+        console.error("No se pudo compartir la página:", err);
       }
     }
   });
