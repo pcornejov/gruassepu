@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pcornejov.github.io/gruassepu/sitemap-index.xml
+Sitemap: https://gruassepu.cl/sitemap-index.xml

@@ -4,8 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://pcornejov.github.io',
-  base: '/gruassepu',
+  site: 'https://gruassepu.cl',
+  base: '/',
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
