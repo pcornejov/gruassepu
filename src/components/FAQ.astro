@@ -1,0 +1,96 @@
+---
+import { site, waLink } from "../config/site";
+import Icon from "./Icon.astro";
+
+const faqs = [
+  {
+    q: `¿Hacen servicio de grúa en toda la ${site.region}?`,
+    a: `Sí. Con base en ${site.hq}, cubrimos Chillán, Chillán Viejo, Bulnes, Coihueco, San Ignacio, Pinto, Quillón y toda la Ruta 5 Sur a su paso por Ñuble.`,
+  },
+  {
+    q: "¿Atienden de noche y los fines de semana?",
+    a: `Sí, estamos disponibles ${site.hours.toLowerCase()}, incluidos feriados. La grúa sale apenas confirmamos tu ubicación.`,
+  },
+  {
+    q: "¿Cuánto se demoran en llegar?",
+    a: "Salimos de inmediato apenas nos escribes por WhatsApp con tu ubicación. El tiempo de llegada depende de dónde te encuentres dentro de la región, pero respondemos y coordinamos al instante.",
+  },
+  {
+    q: "¿Qué tipo de vehículos trasladan?",
+    a: "Autos, camionetas, camiones y maquinaria agrícola (tractores, generadores), además de vehículos siniestrados. Trabajamos con grúa cama y pluma/izaje según el caso.",
+  },
+  {
+    q: "¿Viajan fuera de la región, por ejemplo a Santiago o al sur?",
+    a: `${site.travelNote}`,
+  },
+  {
+    q: "¿El traslado incluye seguro?",
+    a: "Sí, contamos con seguro de carga en cada traslado para tu tranquilidad.",
+  },
+  {
+    q: "¿Cómo cotizo o pido el servicio?",
+    a: "Por WhatsApp: escríbenos tu ubicación y el tipo de vehículo, y te confirmamos de inmediato el valor y el tiempo estimado de llegada.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.a,
+    },
+  })),
+};
+---
+
+<section id="faq" class="bg-white py-16 lg:py-24">
+  <div class="max-w-[800px] mx-auto px-5 lg:px-6">
+    <div class="mb-10 lg:mb-14 text-center" data-reveal>
+      <p class="font-semibold text-sm uppercase tracking-[0.08em] text-[#8a6200] mb-3">
+        Preguntas frecuentes
+      </p>
+      <h2 class="font-display font-extrabold uppercase text-[color:var(--color-ink)] text-[1.875rem] leading-[1.1] lg:text-5xl lg:leading-[1.05] tracking-tight">
+        ¿Tienes dudas? Aquí te respondemos
+      </h2>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      {
+        faqs.map((item, i) => (
+          <details
+            data-reveal
+            style={`transition-delay:${i * 40}ms`}
+            class="group bg-[color:var(--color-slate-50)] rounded-xl px-5 py-4 open:shadow-[var(--shadow-brand-sm)]"
+          >
+            <summary class="flex items-center justify-between gap-4 cursor-pointer list-none font-bold text-[color:var(--color-ink)] text-[17px]">
+              {item.q}
+              <Icon
+                name="chevron-down"
+                class="w-5 h-5 shrink-0 text-slate-500 transition-transform group-open:rotate-180"
+              />
+            </summary>
+            <p class="text-[15px] leading-relaxed text-slate-600 mt-3">{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 flex justify-center" data-reveal>
+      <a
+        href={waLink()}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-full bg-[color:var(--color-wa)] text-[color:var(--color-ink)] font-bold text-sm shadow-[var(--shadow-cta)] hover:bg-[color:var(--color-wa-dark)] transition-colors"
+      >
+        <Icon name="whatsapp" class="w-4 h-4" />
+        ¿Otra duda? Escríbenos
+      </a>
+    </div>
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+</section>
