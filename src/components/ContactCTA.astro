@@ -75,10 +75,9 @@ import tarjeta from "../assets/tarjeta-contacto.jpg";
           type="button"
           id="share-card-btn"
           class="bg-white rounded-2xl p-4 shadow-[var(--shadow-brand-lg)] hover:shadow-xl hover:-translate-y-1 transition-all text-center w-full max-w-[280px] sm:w-[260px] flex flex-col justify-center cursor-pointer"
-          aria-label="Compartir tarjeta de contacto de Grúas Sepu"
+          aria-label="Compartir contacto de Grúas Sepu"
         >
           <Image
-            id="tarjeta-card-img"
             src={tarjeta}
             alt="Tarjeta de contacto de Grúas Sepu"
             width={480}
@@ -91,7 +90,7 @@ import tarjeta from "../assets/tarjeta-contacto.jpg";
           </p>
           <p class="flex items-center justify-center gap-1.5 text-slate-500 text-xs mt-1">
             <Icon name="share" class="w-3.5 h-3.5" />
-            Toca para compartir
+            Toca para compartir contacto
           </p>
         </button>
       </div>
@@ -99,47 +98,60 @@ import tarjeta from "../assets/tarjeta-contacto.jpg";
   </div>
 </section>
 
-<script>
+<script define:vars={{
+  vcardName: site.name,
+  vcardPhone: `+${site.whatsapp}`,
+  vcardHQ: site.hq,
+  vcardNote: `Grúa 24/7 en la ${site.region} — rescate y traslado de vehículos`,
+}}>
   const shareBtn = document.getElementById("share-card-btn");
-  const cardImg = document.getElementById("tarjeta-card-img") as HTMLImageElement | null;
 
   shareBtn?.addEventListener("click", async () => {
-    if (!cardImg) return;
+    const vcard = [
+      "BEGIN:VCARD",
+      "VERSION:3.0",
+      `FN:${vcardName}`,
+      `ORG:${vcardName}`,
+      `TEL;TYPE=CELL:${vcardPhone}`,
+      `ADR:;;${vcardHQ};;;;Chile`,
+      `NOTE:${vcardNote}`,
+      `URL:${location.origin}`,
+      "END:VCARD",
+    ].join("\r\n");
 
-    const imageUrl = cardImg.currentSrc || cardImg.src;
     const shareData = {
-      title: "Grúas Sepu",
-      text: "Tarjeta de contacto de Grúas Sepu — Grúa 24/7 en la Región de Ñuble.",
+      title: vcardName,
+      text: `Contacto de ${vcardName}`,
     };
 
     try {
-      if (navigator.canShare) {
-        const response = await fetch(imageUrl);
-        const blob = await response.blob();
-        const file = new File([blob], "tarjeta-gruas-sepu.jpg", { type: blob.type || "image/jpeg" });
+      const file = new File([vcard], "gruas-sepu.vcf", { type: "text/vcard" });
 
-        if (navigator.canShare({ files: [file] })) {
-          await navigator.share({ ...shareData, files: [file] });
-          return;
-        }
-      }
-
-      if (navigator.share) {
-        await navigator.share({ ...shareData, url: imageUrl });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ ...shareData, files: [file] });
         return;
       }
 
-      // Fallback sin Web Share API (desktop): descarga directa.
+      if (navigator.share) {
+        await navigator.share(shareData);
+        return;
+      }
+
+      // Fallback sin Web Share API (desktop): descarga directa del .vcf
+      // (la mayoría de los navegadores móviles ofrecen "Agregar contacto" al abrirlo igual).
+      const blob = new Blob([vcard], { type: "text/vcard" });
+      const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
-      link.href = imageUrl;
-      link.download = "tarjeta-gruas-sepu.jpg";
+      link.href = url;
+      link.download = "gruas-sepu.vcf";
       document.body.appendChild(link);
       link.click();
       link.remove();
+      URL.revokeObjectURL(url);
     } catch (err) {
-      // El usuario canceló la hoja de compartir, o falló el fetch: no es un error real.
+      // El usuario canceló la hoja de compartir: no es un error real.
       if (err instanceof Error && err.name !== "AbortError") {
-        console.error("No se pudo compartir la tarjeta:", err);
+        console.error("No se pudo compartir el contacto:", err);
       }
     }
   });
