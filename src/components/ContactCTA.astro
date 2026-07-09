@@ -3,6 +3,19 @@ import { Image } from "astro:assets";
 import { site, waLink, withBase } from "../config/site";
 import Icon from "./Icon.astro";
 import tarjeta from "../assets/tarjeta-contacto.jpg";
+import sharp from "sharp";
+import fs from "node:fs";
+import path from "node:path";
+
+// Versión liviana de la tarjeta para embeber como foto de contacto en el vCard
+// (b64 en el propio .vcf, sin depender de una descarga aparte).
+const tarjetaPath = path.join(process.cwd(), "src/assets/tarjeta-contacto.jpg");
+const vcardPhotoBase64 = (
+  await sharp(fs.readFileSync(tarjetaPath))
+    .resize(480, 480, { fit: "inside", withoutEnlargement: true })
+    .jpeg({ quality: 72 })
+    .toBuffer()
+).toString("base64");
 ---
 
 <section id="contacto" class="bg-[#111111] relative">
@@ -103,8 +116,16 @@ import tarjeta from "../assets/tarjeta-contacto.jpg";
   vcardPhone: `+${site.whatsapp}`,
   vcardHQ: site.hq,
   vcardNote: `Grúa 24/7 en la ${site.region} — rescate y traslado de vehículos`,
+  vcardPhotoBase64,
 }}>
   const shareBtn = document.getElementById("share-card-btn");
+
+  // Los valores de propiedad de vCard van plegados cada 75 caracteres,
+  // con las líneas de continuación empezando con un espacio (RFC 2426).
+  function foldVcardLine(line) {
+    const chunks = line.match(/.{1,75}/g) ?? [line];
+    return chunks.join("\r\n ");
+  }
 
   shareBtn?.addEventListener("click", async () => {
     const vcard = [
@@ -116,6 +137,7 @@ import tarjeta from "../assets/tarjeta-contacto.jpg";
       `ADR:;;${vcardHQ};;;;Chile`,
       `NOTE:${vcardNote}`,
       `URL:${location.origin}`,
+      foldVcardLine(`PHOTO;ENCODING=b;TYPE=JPEG:${vcardPhotoBase64}`),
       "END:VCARD",
     ].join("\r\n");
 
